@@ -1,0 +1,28 @@
+{
+  "name": "gsta/order-notify",
+  "description": "Get notified if order is placed",
+  "type": "shopware-platform-plugin",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "GstaOrderNotify\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "GstaOrderNotify\\Test\\": "tests/"
+    }
+  },
+
+  "require": {
+    "shopware/core": ">=6.1"
+  },
+  "extra": {
+    "shopware-plugin-class": "GstaOrderNotify\\GstaOrderNotify",
+    "label": {
+      "de-DE": "Bestell Info",
+      "en-GB": "Order Notify"
+    }
+  }
+
+}

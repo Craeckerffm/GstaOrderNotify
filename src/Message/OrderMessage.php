@@ -2,32 +2,41 @@
 
 namespace GstaOrderNotify\Message;
 
+use DateTimeInterface;
 use Shopware\Core\Checkout\Cart\Event\CheckoutOrderPlacedEvent;
+use Shopware\Core\Framework\Context;
 
 class OrderMessage
 {
-    private $content;
-   public function __construct(CheckoutOrderPlacedEvent $event)
-   {
-       $this->content = $event;
-   }
-   public function getOrderMessage():CheckoutOrderPlacedEvent
-   {
-       return $this->content;
-   }
+    private $order;
+    private $event;
 
-   public function getCustomerName():string
-   {
-       return $this->content->getOrder()->getOrderCustomer()->getLastName();
-   }
-
-    public function getOrderItems():float
+    public function __construct(CheckoutOrderPlacedEvent $event)
     {
-        return $this->content->getOrder()->getPrice()->getTotalPrice();
+        $this->order = $event->getOrder();
+        $this->event = $event;
     }
 
-    public function getOrderDate():float
+    public function getCustomerName(): string
     {
-        return $this->content->getOrder()->getOrderDate()->format('Y-m-d H:i:s');
+        return $this->order->getOrderCustomer()->getLastName();
+    }
+
+    public function getTotalPrice(): float
+    {
+        return $this->order->getPrice()->getTotalPrice();
+    }
+
+    public function getOrderDate(): DateTimeInterface
+    {
+        return $this->order->getOrderDateTime();
+    }
+    public function getContext(): Context
+    {
+        return $this->event->getContext();
+    }
+    public function getSalesChannelId()
+    {
+        return $this->event->getSalesChannelId();
     }
 }

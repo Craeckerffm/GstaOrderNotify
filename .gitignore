@@ -1,1 +1,4 @@
-vendor/
+/vendor/
+/vendor/autoload.php
+/vendor/composer/autoload_real.php
+/vendor/composer/autoload_static.php

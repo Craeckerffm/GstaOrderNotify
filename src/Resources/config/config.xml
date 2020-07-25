@@ -5,13 +5,21 @@
     <card>
         <title>Order Notify Settings</title>
         <title lang="de-DE">Order Notify Einstellungen</title>
-
+        <input-field type="bool">
+            <name>emailEnable</name>
+            <label>Enable Email Notification</label>
+            <defaultValue>false</defaultValue>
+        </input-field>
         <input-field>
             <name>email</name>
             <label>Email Adresse</label>
         </input-field>
 
-
+        <input-field type="bool">
+            <name>telegramEnable</name>
+            <label>Enable Telegram Notification</label>
+            <defaultValue>false</defaultValue>
+        </input-field>
         <input-field>
             <name>botId</name>
             <label>Bot Id</label>

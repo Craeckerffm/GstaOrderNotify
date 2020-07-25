@@ -4,17 +4,16 @@ namespace GstaOrderNotify\Message;
 
 use Shopware\Core\Checkout\Cart\Event\CheckoutOrderPlacedEvent;
 use Shopware\Core\Framework\Context;
-use Shopware\Core\System\SystemConfig\SystemConfigService;
+use Symfony\Component\HttpFoundation\ParameterBag;
 
 
 abstract class AbstractOrderNotifyMessage
 {
     private $order;
     private $event;
-    protected $senderConfig;
     protected $configService;
 
-    public function __construct(CheckoutOrderPlacedEvent $event, SystemConfigService $configService)
+    public function __construct(CheckoutOrderPlacedEvent $event, ParameterBag $configService)
     {
         $this->order = $event->getOrder();
         $this->event = $event;
@@ -41,11 +40,15 @@ abstract class AbstractOrderNotifyMessage
         return $this->event->getSalesChannelId();
     }
 
-    abstract function setConfig(): array;
-
-    public function getConfig(): array
+    public function setConfig(): ParameterBag
     {
-        return $this->senderConfig;
+        return $this->configService;
     }
 
+    public function getConfig(): ParameterBag
+    {
+        return $this->configService;
+    }
+
+    abstract function getMessageText(): string;
 }

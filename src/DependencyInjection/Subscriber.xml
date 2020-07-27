@@ -5,16 +5,10 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-
         <service id="GstaOrderNotify\Subscriber\OrderPlacedSubscriber"
                  class="GstaOrderNotify\Subscriber\OrderPlacedSubscriber">
             <tag name="kernel.event_subscriber"/>
-            <argument type="service" id="GstaOrderNotify\Sender\Sender"/>
+            <argument type="service" id="GstaOrderNotify\Service\DispatchHelper"/>
         </service>
-
-        <service id="GstaOrderNotify\Sender\Sender">
-            <argument type="service" id="encrypted.messenger.bus.shopware"></argument>
-        </service>
-
     </services>
 </container>

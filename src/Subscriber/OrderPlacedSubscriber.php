@@ -2,29 +2,30 @@
 
 namespace GstaOrderNotify\Subscriber;
 
-use GstaOrderNotify\Message\OrderMessage;
-use GstaOrderNotify\Sender\Sender;
+use GstaOrderNotify\Service\DispatchHelper;
 use Shopware\Core\Checkout\Cart\Event\CheckoutOrderPlacedEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 
-
 class OrderPlacedSubscriber implements EventSubscriberInterface
 {
-    private $sender;
-    public function __construct(Sender $sender)
+
+    private $dispatchHelper;
+
+    public function __construct(DispatchHelper $dispatchHelper)
     {
-        $this->sender = $sender;
+        $this->dispatchHelper = $dispatchHelper;
     }
 
-    public static function getSubscribedEvents() : array
+    public static function getSubscribedEvents(): array
     {
         return [
-         CheckoutOrderPlacedEvent::class => 'onOrderPlaced'
+            CheckoutOrderPlacedEvent::class => 'onOrderPlaced',
         ];
     }
-    public function onOrderPlaced(CheckoutOrderPlacedEvent $event){
 
-      $this->sender->startDispatch($event);
+    public function onOrderPlaced(CheckoutOrderPlacedEvent $event)
+    {
+        $this->dispatchHelper->dispatch($event);
     }
 }

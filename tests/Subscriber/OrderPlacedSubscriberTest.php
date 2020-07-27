@@ -16,6 +16,4 @@ class OrderPlacedSubscriberTest extends TestCase
         $this->assertCount(1, $events);
         $this->assertContains('onOrderPlaced', $events);
     }
-
-
 }

@@ -2,22 +2,15 @@
 
 namespace GstaOrderNotify\Test\MessageHandler;
 
-
-
-
 use GstaOrderNotify\MessageHandler\OrderMessageHandler;
 use PHPUnit\Framework\TestCase;
 
 
-class TelegramHandlerTest extends TestCase
+class OrderHandlerTest extends TestCase
 {
-
-    public function TelegramHandlerTest(): void
+    public function testAllMessagesRegisteredWithHandler(): void
     {
         $handlers = OrderMessageHandler::getHandledMessages();
-        $this->assertCount(1, $handlers);
-
+        $this->assertCount(2, $handlers);
     }
-
-
 }

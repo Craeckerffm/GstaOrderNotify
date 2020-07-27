@@ -51,4 +51,5 @@ abstract class AbstractOrderNotifyMessage
     }
 
     abstract function getMessageText(): string;
+
 }

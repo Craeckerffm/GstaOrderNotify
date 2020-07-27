@@ -8,8 +8,7 @@
         <service id="GstaOrderNotify\Subscriber\OrderPlacedSubscriber"
                  class="GstaOrderNotify\Subscriber\OrderPlacedSubscriber">
             <tag name="kernel.event_subscriber"/>
-            <argument type="service" id="messenger.bus.shopware"/>
-            <argument type="service" id="Shopware\Core\System\SystemConfig\SystemConfigService"/>
+            <argument type="service" id="GstaOrderNotify\Service\DispatchHelper"/>
         </service>
     </services>
 </container>

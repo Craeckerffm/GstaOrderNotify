@@ -1,2 +1,2 @@
 composer dump-autoload
-./../../../vendor/bin/phpunit
+./../../../vendor/bin/phpunit --testdox

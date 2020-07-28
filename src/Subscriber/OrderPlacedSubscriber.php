@@ -26,6 +26,6 @@ class OrderPlacedSubscriber implements EventSubscriberInterface
 
     public function onOrderPlaced(CheckoutOrderPlacedEvent $event)
     {
-        $this->dispatchHelper->dispatch($event);
+        $this->dispatchHelper->startDispatch($event);
     }
 }

@@ -26,7 +26,7 @@ class DispatchHelper
     /**
      * @param CheckoutOrderPlacedEvent $event
      */
-    public function dispatch($event)
+    public function startDispatch($event)
     {
         $config = new ParameterBag();
         $config->set('botId', $this->systemConfig->get("GstaOrderNotify.config.botId"));

@@ -6,6 +6,7 @@ use GstaOrderNotify\Message\EmailOrderMessage;
 use GstaOrderNotify\Message\TelegramOrderMessage;
 use GstaOrderNotify\Service\EmailSender;
 use GstaOrderNotify\Service\TelegramSender;
+use InvalidArgumentException;
 use Shopware\Core\Framework\MessageQueue\Handler\AbstractMessageHandler;
 
 class OrderMessageHandler extends AbstractMessageHandler
@@ -28,6 +29,9 @@ class OrderMessageHandler extends AbstractMessageHandler
      */
     public function sendTelegram($message)
     {
+        if (!$message instanceof TelegramOrderMessage){
+            throw new InvalidArgumentException('Expects TelegramOrderMessage');
+        }
         $this->telegramSender->send($message);
     }
 
@@ -35,6 +39,9 @@ class OrderMessageHandler extends AbstractMessageHandler
      * @param EmailOrderMessage $message
      */
     public function sendEmail($message){
+        if (!$message instanceof EmailOrderMessage){
+            throw new InvalidArgumentException('Expects EmailOrderMessage');
+        }
         $this->emailSender->send($message);
     }
 

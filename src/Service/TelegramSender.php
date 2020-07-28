@@ -13,12 +13,15 @@ class TelegramSender implements SenderInterface
     public function send($message): void
     {
         $conf = $message->getConfig();
-        $url = "https://api.telegram.org/bot{$conf->get('botId')}/sendMessage?chat_id={$conf->get('channelId')}&text={$message->getMessageText()}";
         $client = new Client();
+        $data = [
+            'chat_id' => $conf->get('channelId'),
+            'text' => $message->getMessageText(),
+        ];
+        $queryString = http_build_query($data);
+        $url = "https://api.telegram.org/bot{$conf->get('botId')}/sendMessage?$queryString";
         $client->request("GET", $url);
     }
 }
-
-
 
 

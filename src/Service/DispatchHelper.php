@@ -4,11 +4,14 @@
 namespace GstaOrderNotify\Service;
 
 
+use GstaOrderNotify\Message\Email;
 use GstaOrderNotify\Message\EmailOrderMessage;
+use GstaOrderNotify\Message\MessageSubject;
+use GstaOrderNotify\Message\TelegramBotId;
+use GstaOrderNotify\Message\TelegramChatId;
 use GstaOrderNotify\Message\TelegramOrderMessage;
 use Shopware\Core\Checkout\Cart\Event\CheckoutOrderPlacedEvent;
 use Shopware\Core\System\SystemConfig\SystemConfigService;
-use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 class DispatchHelper
@@ -28,13 +31,17 @@ class DispatchHelper
      */
     public function startDispatch($event)
     {
-        $config = new ParameterBag();
-        $config->set('botId', $this->systemConfig->get("GstaOrderNotify.config.botId"));
-        $config->set('channelId', $this->systemConfig->get("GstaOrderNotify.config.channelId"));
+        $telegramChatId = new TelegramChatId($this->systemConfig->get("GstaOrderNotify.config.channelId"));
+        $telegramBot = new TelegramBotId($this->systemConfig->get("GstaOrderNotify.config.botId"));
+        $email = new Email($this->systemConfig->get("GstaOrderNotify.config.email"));
+        $subject = new MessageSubject('Neue Bestellung');
 
-        $config->set('email', $this->systemConfig->get("GstaOrderNotify.config.email"));
+        if ($this->systemConfig->get('GstaOrderNotify.config.telegramEnable')) {
+            $this->bus->dispatch(new TelegramOrderMessage($event, $telegramBot, $telegramChatId));
+        }
 
-        if ($this->systemConfig->get('GstaOrderNotify.config.telegramEnable')) $this->bus->dispatch(new TelegramOrderMessage($event, $config));
-        if ($this->systemConfig->get('GstaOrderNotify.config.emailEnable')) $this->bus->dispatch(new EmailOrderMessage($event, $config));
+        if ($this->systemConfig->get('GstaOrderNotify.config.emailEnable')) {
+            $this->bus->dispatch(new EmailOrderMessage($event, $email, $subject));
+        }
     }
 }

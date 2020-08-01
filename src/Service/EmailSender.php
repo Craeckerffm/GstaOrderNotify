@@ -21,12 +21,11 @@ class EmailSender implements SenderInterface
      */
     public function send($message): void
     {
-        $config = $message->getConfig();
         $data = new ParameterBag();
         $data->set(
             'recipients',
             [
-                $config->get('email') => 'Shop Owner',
+                $message->getEmail() => 'Shop Owner',
             ]
         );
         $data->set('senderName', $message->getSubject());

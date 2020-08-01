@@ -13,11 +13,10 @@ abstract class AbstractOrderNotifyMessage
     private $event;
     protected $configService;
 
-    public function __construct(CheckoutOrderPlacedEvent $event, ParameterBag $configService)
+    public function __construct(CheckoutOrderPlacedEvent $event)
     {
         $this->order = $event->getOrder();
         $this->event = $event;
-        $this->configService = $configService;
     }
 
     public function getCustomerName(): string
@@ -40,15 +39,6 @@ abstract class AbstractOrderNotifyMessage
         return $this->event->getSalesChannelId();
     }
 
-    public function setConfig(): ParameterBag
-    {
-        return $this->configService;
-    }
-
-    public function getConfig(): ParameterBag
-    {
-        return $this->configService;
-    }
 
     abstract function getMessageText(): string;
 
